@@ -3,21 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn Test Website</title>
+    <title>Flexbouw | Mijn Website</title>
+    
+    <!-- Hier beginnen de stijlen (CSS) -->
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            text-align: center;
-            padding-top: 50px;
+        /* 1. Basisinstellingen */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        h1 {
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
             color: #333;
+            background-color: #f9f9f9;
+        }
+
+        /* 2. De Navigatiebalk (Header) */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #3498db;
+        }
+
+        /* 3. Het Heldengedeelte (Hero Section) */
+        .hero {
+            height: 80vh; /* 80% van het scherm */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        /* 4. De Knop */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px); /* Zweef-effectje */
+        }
+
+        /* 5. Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #2c3e50;
+            color: #bdc3c7;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <h1>hallllfd freld!</h1>
-    <p>Dit is mijn test website. Het werkt!</p>
+
+    <!-- Navigatie -->
+    <header>
+        <div class="logo">Flexbouw</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Diensten</a></li>
+                <li><a href="#">Over Ons</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hoofdgedeelte -->
+    <section class="hero">
+        <h1>Welkom bij Flexbouw</h1>
+        <p>Wij bouwen aan een betere toekomst. Ontdek onze projecten en diensten voor duurzaam en flexibel bouwen.</p>
+        <a href="#" class="btn">Neem Contact Op</a>
+    </section>
+
+    <!-- Voettekst -->
+    <footer>
+        <p>&copy; 2024 Flexbouw. Alle rechten voorbehouden.</p>
+    </footer>
+
 </body>
 </html>
