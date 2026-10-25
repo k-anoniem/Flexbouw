@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flexbouw | Mijn Website</title>
     
-    <!-- Hier beginnen de stijlen (CSS) -->
     <style>
-        /* 1. Basisinstellingen */
+        /* 1. Basisinstellingen (Reset) */
         * {
             margin: 0;
             padding: 0;
@@ -19,70 +18,103 @@
             line-height: 1.6;
             color: #333;
             background-color: #f9f9f9;
+            /* Zorgt ervoor dat de footer altijd onderaan blijft, ook bij weinig tekst */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
         }
 
-        /* 2. De Navigatiebalk (Header) */
+        /* 2. BOVENKANT: De Header met Logo en Tabs */
         header {
             background-color: #2c3e50;
             color: white;
-            padding: 1rem 2rem;
+            padding: 1rem 5%; /* 5% ruimte links en rechts */
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; /* Duwt logo naar links, nav naar rechts */
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
             letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Een nep-logo (vierkantje) voor de sier */
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #3498db;
+            border-radius: 5px;
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            gap: 20px;
+            gap: 30px; /* Ruimte tussen de tabs */
         }
 
         nav a {
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent; /* Voor het hover-effect */
+            transition: color 0.3s, border-color 0.3s;
         }
 
         nav a:hover {
             color: #3498db;
+            border-bottom: 2px solid #3498db; /* Lijntje onder de actieve tab */
         }
 
-        /* 3. Het Heldengedeelte (Hero Section) */
-        .hero {
-            height: 80vh; /* 80% van het scherm */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        /* 3. MIDDEN: Het Hoofdgedeelte */
+        main {
+            flex: 1; /* Zorgt dat dit gedeelte alle resterende ruimte opvult */
+        }
+
+        /* Secties met afwisselende achtergronden */
+        section {
+            padding: 80px 5%;
             text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .bg-light {
+            background-color: #ffffff;
+        }
+
+        .bg-grey {
+            background-color: #ecf0f1;
+        }
+
+        h1, h2 {
             color: #2c3e50;
+            margin-bottom: 20px;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin-bottom: 2rem;
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        p {
+            max-width: 800px;
+            margin: 0 auto 30px auto; /* Centreert de tekst en geeft ruimte onderaan */
+            font-size: 1.1rem;
             color: #555;
         }
 
-        /* 4. De Knop */
+        /* Knoppen */
         .btn {
             display: inline-block;
             padding: 12px 30px;
@@ -96,43 +128,140 @@
 
         .btn:hover {
             background-color: #2980b9;
-            transform: translateY(-2px); /* Zweef-effectje */
+            transform: translateY(-2px);
         }
 
-        /* 5. Footer */
+        /* Een raster voor kaartjes (bijv. diensten) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        /* 4. EIND: De Footer */
         footer {
-            text-align: center;
-            padding: 2rem;
             background-color: #2c3e50;
             color: #bdc3c7;
-            font-size: 0.9rem;
+            padding: 40px 5%;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid #34495e;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigatie -->
+    <!-- ================= BOVENKANT ================= -->
     <header>
-        <div class="logo">Flexbouw</div>
+        <div class="logo">
+            <div class="logo-icon"></div> <!-- Vervang dit later door een echte <img> -->
+            Flexbouw
+        </div>
         <nav>
             <ul>
+                <!-- Hier kun je de href="#" aanpassen naar de ID's van je secties (bijv. #diensten) -->
                 <li><a href="#">Home</a></li>
-                <li><a href="#">Diensten</a></li>
-                <li><a href="#">Over Ons</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#diensten">Diensten</a></li>
+                <li><a href="#over-ons">Over Ons</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Hoofdgedeelte -->
-    <section class="hero">
-        <h1>Welkom bij Flexbouw</h1>
-        <p>Wij bouwen aan een betere toekomst. Ontdek onze projecten en diensten voor duurzaam en flexibel bouwen.</p>
-        <a href="#" class="btn">Neem Contact Op</a>
-    </section>
+    <!-- ================= MIDDEN ================= -->
+    <main>
+        <!-- Sectie 1: De Introductie (Hero) -->
+        <section class="bg-light" id="home">
+            <h1>Welkom bij Flexbouw</h1>
+            <p>Wij bouwen aan een betere toekomst. Ontdek onze projecten en diensten voor duurzaam en flexibel bouwen.</p>
+            <a href="#diensten" class="btn">Bekijk onze diensten</a>
+        </section>
 
-    <!-- Voettekst -->
+        <!-- Sectie 2: Diensten (Hier krijgt elke button/kaart een eigen stukje) -->
+        <section class="bg-grey" id="diensten">
+            <h2>Onze Diensten</h2>
+            <p>Wij bieden een breed scala aan bouwoplossingen, afgestemd op jouw wensen.</p>
+            
+            <div class="grid-container">
+                <!-- Kaartje 1 -->
+                <div class="card">
+                    <h3>Nieuwbouw</h3>
+                    <p>Van fundering tot dak: wij realiseren jouw droomhuis of bedrijfspand van begin tot eind.</p>
+                </div>
+                <!-- Kaartje 2 -->
+                <div class="card">
+                    <h3>Verbouw</h3>
+                    <p>Geef je bestaande woning een nieuw leven met onze slimme verbouwingsoplossingen.</p>
+                </div>
+                <!-- Kaartje 3 -->
+                <div class="card">
+                    <h3>Onderhoud</h3>
+                    <p>Zorgeloos genieten van je woning. Wij doen het periodieke onderhoud voor je.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectie 3: Over Ons -->
+        <section class="bg-light" id="over-ons">
+            <h2>Over Flexbouw</h2>
+            <p>Al meer dan 10 jaar zijn wij dé specialist in flexibel en duurzaam bouwen. Ons team van experts staat klaar om jouw visie werkelijkheid te maken.</p>
+        </section>
+
+        <!-- Sectie 4: Contact -->
+        <section class="bg-grey" id="contact">
+            <h2>Neem Contact Op</h2>
+            <p>Heb je een vraag of wil je een offerte aanvragen? We horen graag van je!</p>
+            <a href="mailto:info@flexbouw.nl" class="btn">Stuur een e-mail</a>
+        </section>
+    </main>
+
+    <!-- ================= EIND ================= -->
     <footer>
+        <div class="footer-content">
+            <div class="logo">Flexbouw</div>
+            <div class="footer-links">
+                <a href="#">Privacybeleid</a>
+                <a href="#">Algemene Voorwaarden</a>
+            </div>
+        </div>
         <p>&copy; 2024 Flexbouw. Alle rechten voorbehouden.</p>
     </footer>
 
