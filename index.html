@@ -69,11 +69,39 @@
             border-bottom: 2px solid transparent; /* Voor het hover-effect */
             transition: color 0.3s, border-color 0.3s;
         }
+        
+                /* De basis van de links in de navigatie */
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Ruimte tussen icoontje en tekst */
+            transition: color 0.3s;
+            position: relative;
+        }
 
+        /* Het icoontje (SVG) */
+        nav a svg {
+            width: 0; /* Standaard onzichtbaar (0 breed) */
+            height: 20px;
+            opacity: 0;
+            transition: all 0.3s ease; /* Zorgt voor de vloeiende animatie */
+            fill: #3498db; /* Kleur van het icoontje */
+        }
+
+        /* De Micro-interactie: Wat gebeurt er bij hover? */
         nav a:hover {
             color: #3498db;
-            border-bottom: 2px solid #3498db; /* Lijntje onder de actieve tab */
         }
+
+        nav a:hover svg {
+            width: 20px; /* Het icoontje klapt open */
+            opacity: 1;  /* En wordt zichtbaar */
+            transform: scale(1.1); /* Een klein pop-effectje */
+        }
+        
 
         /* 3. MIDDEN: Het Hoofdgedeelte */
         main {
