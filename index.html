@@ -106,9 +106,10 @@
         h2 { font-size: 2.5rem; }
         p { max-width: 800px; margin: 0 auto 30px auto; font-size: 1.1rem; color: #555; }
 
-        /* 5. DE SHINE KNOPPEN (Aangepast) */
+        /* ================= DE NIEUWE SHINE KNOP ================= */
         .btn-container { margin-top: 20px; }
 
+        /* De buitenste laag: Dit is de zwarte rand */
         .subscribe-shine {
             position: relative;
             display: inline-flex;
@@ -117,56 +118,49 @@
             width: 240px; 
             height: 60px;
             border-radius: 999px;
-            background: transparent;
-            padding: 0;
+            background-color: var(--zwart); /* Zwarte rand basis */
             cursor: pointer;
             text-decoration: none;
-            /* GEEN overflow: hidden meer, dat loste het glitch-effect op */
+            padding: 2px; /* Dikte van de zwarte rand */
+            overflow: hidden; /* Dit zorgt dat de gloed niet buiten de knop komt */
         }
 
-        /* De glimmende achtergrond */
+        /* De glimmende laag (verschijnt alleen bij hover) */
         .subscribe-shine-gradient {
             position: absolute;
-            inset: -2px; /* Iets groter dan de knop zodat hij als rand fungeert */
-            border-radius: 999px;
-            /* Zwart-Wit-Zwart gradient */
+            width: 150%; /* Groter dan de knop zodat hij kan draaien */
+            height: 150%;
+            /* Witte gloed in het midden, zwart aan de randen */
             background: linear-gradient(121deg, #121212 30%, #ffffff 50%, #121212 70%);
-            /* Standaard onzichtbaar */
-            opacity: 0; 
+            opacity: 0; /* Standaard onzichtbaar */
             transition: opacity 0.2s ease;
             z-index: 1;
         }
 
-        /* De binnenkant met de tekst */
+        /* De binnenkant van de knop (Oranje) */
         .subscribe-shine-inner {
             position: absolute;
-            inset: 0; /* Vult de hele knop */
+            inset: 2px; /* Zorgt dat de zwarte rand van de buitenkant zichtbaar blijft */
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 999px;
-            background: var(--zwart); /* STANDAARD HELEMAAL ZWART */
+            background: var(--oranje); /* STANDAARD ORANJE */
             color: var(--wit);
             font-size: 15px;
             font-weight: 700;
-            transition: background-color 0.3s, color 0.3s;
-            z-index: 2; /* Ligt bovenop de glimmende achtergrond */
+            transition: background-color 0.3s;
+            z-index: 2; /* Ligt bovenop de gloed */
         }
 
-        /* Hover effect op de tekst/binnenkant */
-        .subscribe-shine:hover .subscribe-shine-inner {
-            background: var(--oranje);
-            color: var(--wit);
-        }
-
-        /* Als je hovert, wordt de glimmende achtergrond zichtbaar */
+        /* Hover: De gloed wordt zichtbaar */
         .subscribe-shine:hover .subscribe-shine-gradient {
             opacity: 1;
         }
 
-        .subscribe-shine:focus-visible {
-            outline: 2px solid var(--zwart);
-            outline-offset: 3px;
+        /* Hover: De binnenkant wordt iets donkerder oranje voor diepte */
+        .subscribe-shine:hover .subscribe-shine-inner {
+            background: var(--oranje-donker);
         }
 
         /* 6. Kaartjes */
