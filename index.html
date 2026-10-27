@@ -6,18 +6,17 @@
     <title>Flexbouw | Mijn Website</title>
     
     <style>
-        /* 1. Kleurenpalet (Zwart, Wit, Oranje) */
+        /* 1. Kleurenpalet */
         :root {
-            --zwart: #121212;        /* Diep zwart voor de header/footer */
+            --zwart: #121212;
             --wit: #ffffff;
-            --oranje: #ff7f00;       /* Het oranje van je logo */
-            --oranje-licht: #ff9933; /* Iets lichter voor de knoppen */
-            --oranje-donker: #e67300;/* Voor de hover van knoppen */
-            --grijs-licht: #f4f4f4;  /* Voor afwisselende achtergronden */
+            --oranje: #ff7f00;       /* Hoofdkleur */
+            --oranje-donker: #e67300;
+            --grijs-licht: #f4f4f4;
             --tekst-kleur: #333333;
         }
 
-        /* 2. Basisinstellingen (Reset) */
+        /* 2. Basis */
         * {
             margin: 0;
             padding: 0;
@@ -34,9 +33,9 @@
             min-height: 100vh; 
         }
 
-        /* 3. BOVENKANT: De Header */
+        /* 3. HEADER (Nu in Oranje!) */
         header {
-            background-color: var(--zwart);
+            background-color: var(--oranje); /* Oranje balk */
             color: var(--wit);
             padding: 1rem 5%;
             display: flex;
@@ -45,21 +44,20 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .logo-link {
             display: flex;
             align-items: center;
             text-decoration: none;
-            /* Tip: Als je logo een witte achtergrond heeft, zet hier een wit blokje achter */
-            background-color: var(--wit); 
+            background-color: var(--wit); /* Wit blokje voor je logo */
             padding: 5px 10px;
             border-radius: 5px;
         }
 
         .logo-img {
-            height: 50px; /* Iets kleiner gemaakt zodat het mooi in de zwarte balk past */
+            height: 50px;
             width: auto;
         }
 
@@ -69,7 +67,6 @@
             gap: 30px;
         }
 
-        /* De basis van de links in de navigatie */
         nav a {
             color: var(--wit);
             text-decoration: none;
@@ -81,17 +78,17 @@
             position: relative;
         }
 
-        /* De Micro-interactie: Icoontjes worden oranje */
+        /* Icoontjes in de header (worden zwart bij hover) */
         nav a svg {
             width: 0; 
             height: 20px;
             opacity: 0;
             transition: all 0.3s ease;
-            fill: var(--oranje); /* Oranje icoontjes */
+            fill: var(--zwart); 
         }
 
         nav a:hover {
-            color: var(--oranje);
+            color: var(--zwart);
         }
 
         nav a:hover svg {
@@ -100,7 +97,7 @@
             transform: scale(1.1); 
         }
 
-        /* 4. MIDDEN: Het Hoofdgedeelte */
+        /* 4. MIDDEN */
         main {
             flex: 1; 
         }
@@ -110,13 +107,8 @@
             text-align: center;
         }
 
-        .bg-light {
-            background-color: var(--wit);
-        }
-
-        .bg-grey {
-            background-color: var(--grijs-licht);
-        }
+        .bg-light { background-color: var(--wit); }
+        .bg-grey { background-color: var(--grijs-licht); }
 
         h1, h2 {
             color: var(--zwart);
@@ -133,73 +125,64 @@
             color: #555;
         }
 
-        /* 5. DE KNOPPEN MET SHINE EFFECT */
-                /* ================= NIEUWE SHINE KNOP ================= */
-        .btn-shine {
+        /* 5. DE NIEUWE SHINE KNOPPEN */
+        .btn-container {
+            margin-top: 20px;
+        }
+
+        .subscribe-shine {
             position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            width: 240px; /* Iets breder voor de Nederlandse tekst */
             height: 60px;
-            padding: 0 40px;
-            border-radius: 50px; /* Ronde knoppen net als het voorbeeld */
+            overflow: hidden;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
             text-decoration: none;
-            overflow: hidden; /* Zorgt dat de glans niet buiten de knop komt */
-            box-shadow: 0 4px 15px rgba(255, 127, 0, 0.4);
-            margin-top: 10px;
         }
 
-        /* De glimmende achtergrond (De "rand") */
-        .btn-shine-bg {
+        /* De glimmende achtergrond */
+        .subscribe-shine-gradient {
             position: absolute;
-            /* We maken hem groot en vierkant zodat hij mooi kan draaien */
-            width: 200%; 
-            height: 200%;
-            /* Zwart naar Oranje naar Zwart gradient */
-            background: linear-gradient(121deg, #121212 30%, #ff7f00 50%, #121212 70%);
-            /* De animatie: hij draait continu rond */
-            animation: rotateShine 3s linear infinite;
+            width: 230px;
+            height: 250px;
+            flex: none;
+            /* Zwart-Wit-Zwart gradient voor een mooie glans */
+            background: linear-gradient(121deg, #121212 38%, #ffffff 50%, #121212 61%);
+            /* Standaard geen animatie, wordt via JS gestart */
         }
 
-        /* De tekst en de binnenkant van de knop */
-        .btn-shine-text {
-            position: relative;
+        /* De binnenkant met de tekst */
+        .subscribe-shine-inner {
+            position: absolute;
+            inset: 2px; /* Dikte van de glimmende rand */
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Iets kleiner dan de buitenkant, zodat de glimmende rand zichtbaar wordt */
-            height: calc(100% - 4px); 
-            width: calc(100% - 4px);
-            background-color: var(--oranje); /* De binnenkant is oranje */
-            color: white;
-            border-radius: 50px; /* Ook rond */
-            font-weight: bold;
-            font-size: 1.1rem;
-            z-index: 1;
+            border-radius: 999px;
+            background: var(--oranje); /* Oranje binnenkant */
+            color: var(--wit);
+            font-size: 15px;
+            font-weight: 700;
             transition: background-color 0.3s;
         }
 
-        /* Hover effect: de binnenkant wordt donkerder */
-        .btn-shine:hover .btn-shine-text {
-            background-color: var(--oranje-donker);
+        .subscribe-shine:hover .subscribe-shine-inner {
+            background: var(--oranje-donker);
         }
 
-        /* De animatie keyframes */
-        @keyframes rotateShine {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Toegankelijkheid (focus) */
+        .subscribe-shine:focus-visible {
+            outline: 2px solid var(--zwart);
+            outline-offset: 3px;
         }
 
-        .btn:hover {
-            background-color: var(--oranje-donker);
-            transform: translateY(-3px);
-        }
-
-        .btn:hover::before {
-            left: 100%; /* Schuift bij hover naar de rechterkant */
-        }
-
-        /* 6. Kaartjes (Diensten) */
+        /* 6. Kaartjes */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -211,7 +194,7 @@
             background: var(--wit);
             padding: 30px;
             border-radius: 8px;
-            border-top: 4px solid var(--oranje); /* Oranje accent streepje bovenop */
+            border-top: 4px solid var(--oranje);
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s, box-shadow 0.3s;
         }
@@ -226,7 +209,7 @@
             margin-bottom: 15px;
         }
 
-        /* 7. EIND: De Footer */
+        /* 7. FOOTER */
         footer {
             background-color: var(--zwart);
             color: #aaaaaa;
@@ -303,15 +286,18 @@
 
     <!-- ================= MIDDEN ================= -->
     <main>
-        <!-- Sectie 1: De Introductie (Hero) -->
+        <!-- Sectie 1: Hero -->
         <section class="bg-light" id="home">
             <h1>Welkom bij Flexbouw</h1>
             <p>Wij bouwen aan een betere toekomst. Ontdek onze projecten en diensten voor duurzaam en flexibel bouwen.</p>
-            <!-- Hier zie je de Shine-knop in actie -->
-            <a href="#diensten" class="btn-shine">
-    <span class="btn-shine-bg"></span>
-    <span class="btn-shine-text">Bekijk onze diensten</span>
-</a>
+            
+            <div class="btn-container">
+                <!-- De Shine Knop -->
+                <a href="#diensten" class="subscribe-shine">
+                    <span class="subscribe-shine-gradient"></span>
+                    <span class="subscribe-shine-inner">Bekijk onze diensten</span>
+                </a>
+            </div>
         </section>
 
         <!-- Sectie 2: Diensten -->
@@ -345,7 +331,14 @@
         <section class="bg-grey" id="contact">
             <h2>Neem Contact Op</h2>
             <p>Heb je een vraag of wil je een offerte aanvragen? We horen graag van je!</p>
-            <a href="mailto:info@flexbouw.nl" class="btn">Stuur een e-mail</a>
+            
+            <div class="btn-container">
+                <!-- Nog een Shine Knop -->
+                <a href="mailto:info@flexbouw.nl" class="subscribe-shine">
+                    <span class="subscribe-shine-gradient"></span>
+                    <span class="subscribe-shine-inner">Stuur een e-mail</span>
+                </a>
+            </div>
         </section>
     </main>
 
@@ -361,5 +354,63 @@
         <p>&copy; 2024 Flexbouw. Alle rechten voorbehouden.</p>
     </footer>
 
+    <!-- ================= JAVASCRIPT VOOR DE SHINE ANIMATIE ================= -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Zoek alle shine-knoppen op de pagina
+            const shineButtons = document.querySelectorAll('.subscribe-shine');
+
+            shineButtons.forEach(button => {
+                const gradient = button.querySelector('.subscribe-shine-gradient');
+                let spinAnimation = null;
+
+                // Functie om te beginnen met draaien (bij hover)
+                const startSpinning = () => {
+                    if (!gradient || spinAnimation) return;
+                    
+                    // Stop een eventuele oude "settle" animatie
+                    if (gradient.getAnimations) {
+                        gradient.getAnimations().forEach(anim => anim.cancel());
+                    }
+
+                    // Start de oneindige rotatie
+                    spinAnimation = gradient.animate(
+                        [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
+                        { duration: 3000, easing: "linear", iterations: Infinity }
+                    );
+                };
+
+                // Functie om te stoppen en rustig terug te draaien (bij muis weghalen)
+                const settleAtStart = () => {
+                    if (!gradient || !spinAnimation) return;
+                    
+                    const currentTime = typeof spinAnimation.currentTime === "number" ? spinAnimation.currentTime : 0;
+                    const angle = ((currentTime % 3000) / 3000) * 360; // Bereken huidige hoek
+                    
+                    spinAnimation.cancel();
+                    spinAnimation = null;
+
+                    // Animeer soepel terug naar 0 graden
+                    if (gradient.animate) {
+                        const settle = gradient.animate(
+                            [{ transform: `rotate(${angle}deg)` }, { transform: "rotate(0deg)" }],
+                            { duration: Math.max((angle / 360) * 3000, 100), easing: "linear", fill: "forwards" }
+                        );
+                        
+                        // Ruim de animatie op als hij klaar is
+                        settle.onfinish = () => {
+                            settle.cancel();
+                        };
+                    }
+                };
+
+                // Koppel de muis- en focus-events
+                button.addEventListener('mouseenter', startSpinning);
+                button.addEventListener('mouseleave', settleAtStart);
+                button.addEventListener('focus', startSpinning);
+                button.addEventListener('blur', settleAtStart);
+            });
+        });
+    </script>
 </body>
 </html>
