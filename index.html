@@ -134,32 +134,60 @@
         }
 
         /* 5. DE KNOPPEN MET SHINE EFFECT */
-        .btn {
-            display: inline-block;
-            padding: 15px 35px;
-            background-color: var(--oranje);
-            color: var(--wit);
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 1.1rem;
+                /* ================= NIEUWE SHINE KNOP ================= */
+        .btn-shine {
             position: relative;
-            overflow: hidden; /* Zorgt dat de glans binnen de knop blijft */
-            transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 4px 6px rgba(255, 127, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+            padding: 0 40px;
+            border-radius: 50px; /* Ronde knoppen net als het voorbeeld */
+            text-decoration: none;
+            overflow: hidden; /* Zorgt dat de glans niet buiten de knop komt */
+            box-shadow: 0 4px 15px rgba(255, 127, 0, 0.4);
+            margin-top: 10px;
         }
 
-        /* De Shine (Glans) Micro-interactie */
-        .btn::before {
-            content: '';
+        /* De glimmende achtergrond (De "rand") */
+        .btn-shine-bg {
             position: absolute;
-            top: 0;
-            left: -100%; /* Begint buiten de knop aan de linkerkant */
-            width: 100%;
-            height: 100%;
-            /* Een gradient die van transparant naar wit naar transparant gaat */
-            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-            transition: all 0.6s ease;
+            /* We maken hem groot en vierkant zodat hij mooi kan draaien */
+            width: 200%; 
+            height: 200%;
+            /* Zwart naar Oranje naar Zwart gradient */
+            background: linear-gradient(121deg, #121212 30%, #ff7f00 50%, #121212 70%);
+            /* De animatie: hij draait continu rond */
+            animation: rotateShine 3s linear infinite;
+        }
+
+        /* De tekst en de binnenkant van de knop */
+        .btn-shine-text {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Iets kleiner dan de buitenkant, zodat de glimmende rand zichtbaar wordt */
+            height: calc(100% - 4px); 
+            width: calc(100% - 4px);
+            background-color: var(--oranje); /* De binnenkant is oranje */
+            color: white;
+            border-radius: 50px; /* Ook rond */
+            font-weight: bold;
+            font-size: 1.1rem;
+            z-index: 1;
+            transition: background-color 0.3s;
+        }
+
+        /* Hover effect: de binnenkant wordt donkerder */
+        .btn-shine:hover .btn-shine-text {
+            background-color: var(--oranje-donker);
+        }
+
+        /* De animatie keyframes */
+        @keyframes rotateShine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .btn:hover {
@@ -280,7 +308,10 @@
             <h1>Welkom bij Flexbouw</h1>
             <p>Wij bouwen aan een betere toekomst. Ontdek onze projecten en diensten voor duurzaam en flexibel bouwen.</p>
             <!-- Hier zie je de Shine-knop in actie -->
-            <a href="#diensten" class="btn">Bekijk onze diensten</a>
+            <a href="#diensten" class="btn-shine">
+    <span class="btn-shine-bg"></span>
+    <span class="btn-shine-text">Bekijk onze diensten</span>
+</a>
         </section>
 
         <!-- Sectie 2: Diensten -->
