@@ -106,70 +106,83 @@
         h2 { font-size: 2.5rem; }
         p { max-width: 800px; margin: 0 auto 30px auto; font-size: 1.1rem; color: #555; }
 
-        /* ================= DE NIEUWE SHINE KNOP ================= */
-        .btn-container { margin-top: 20px; }
+        
+/* ================= SHINE KNOP ================= */
 
-        /* De buitenste laag: Dit is de zwarte rand */
-        .subscribe-shine {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 240px; 
-            height: 60px;
-            border-radius: 999px;
-            background-color: var(--zwart); /* Zwarte rand basis */
-            cursor: pointer;
-            text-decoration: none;
-            padding: 2px; /* Dikte van de zwarte rand */
-            overflow: hidden; /* Dit zorgt dat de gloed niet buiten de knop komt */
-        }
+.btn-container {
+    margin-top: 20px;
+}
 
-        /* De glimmende laag (verschijnt alleen bij hover) */
-        .subscribe-shine-gradient {
-            position: absolute;
-            width: 150%; /* Groter dan de knop zodat hij kan draaien */
-            height: 150%;
-            /* Witte gloed in het midden, zwart aan de randen */
-            background: linear-gradient(121deg, #121212 30%, #ffffff 50%, #121212 70%);
-            opacity: 0; /* Standaard onzichtbaar */
-            transition: opacity 0.2s ease;
-            z-index: 1;
-        }
+/* Buitenste knop met zwarte rand */
+.subscribe-shine {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 240px;
+    height: 60px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: var(--zwart);
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    isolation: isolate;
+}
 
-        /* De binnenkant van de knop (Oranje) */
-        .subscribe-shine-inner {
-            position: absolute;
-            inset: 2px; /* Zorgt dat de zwarte rand van de buitenkant zichtbaar blijft */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 999px;
-            background: var(--oranje); /* STANDAARD ORANJE */
-            color: var(--wit);
-            font-size: 15px;
-            font-weight: 700;
-            transition: background-color 0.3s;
-            z-index: 2; /* Ligt bovenop de gloed */
-        }
+/* Witte gloed: standaard volledig onzichtbaar */
+.subscribe-shine-gradient {
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    flex: none;
+    background: linear-gradient(
+        121deg,
+        #121212 38%,
+        #ffffff 50%,
+        #121212 61%
+    );
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+}
 
-        /* Hover: De gloed wordt zichtbaar */
-        .subscribe-shine:hover .subscribe-shine-gradient {
-            opacity: 1;
-        }
+/* Oranje binnenkant */
+.subscribe-shine-inner {
+    position: absolute;
+    inset: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--oranje);
+    color: var(--zwart);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    transition: background-color 0.3s ease;
+    z-index: 1;
+}
 
-        /* Hover: De binnenkant wordt iets donkerder oranje voor diepte */
-        .subscribe-shine:hover .subscribe-shine-inner {
-            background: var(--oranje-donker);
-        }
+/* De gloed verschijnt uitsluitend bij hover of focus */
+.subscribe-shine:hover .subscribe-shine-gradient,
+.subscribe-shine:focus-visible .subscribe-shine-gradient {
+    opacity: 1;
+}
 
-        /* 6. Kaartjes */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
+/* Oranje blijft oranje bij hover */
+.subscribe-shine:hover .subscribe-shine-inner,
+.subscribe-shine:focus-visible .subscribe-shine-inner {
+    background: var(--oranje);
+}
+
+/* Toegankelijke toetsenbordfocus */
+.subscribe-shine:focus-visible {
+    outline: 2px solid var(--zwart);
+    outline-offset: 4px;
+}
+
 
         .card {
             background: var(--wit);
@@ -289,54 +302,97 @@
         <p>&copy; 2024 Flexbouw. Alle rechten voorbehouden.</p>
     </footer>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const shineButtons = document.querySelectorAll('.subscribe-shine');
+    
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const shineButtons = document.querySelectorAll(".subscribe-shine");
 
-            shineButtons.forEach(button => {
-                const gradient = button.querySelector('.subscribe-shine-gradient');
-                let spinAnimation = null;
+    shineButtons.forEach((button) => {
+        const gradient = button.querySelector(".subscribe-shine-gradient");
 
-                const startSpinning = () => {
-                    if (!gradient || spinAnimation) return;
-                    
-                    if (gradient.getAnimations) {
-                        gradient.getAnimations().forEach(anim => anim.cancel());
+        if (!gradient) return;
+
+        let spinAnimation = null;
+        let settleAnimation = null;
+
+        const startSpinning = () => {
+            if (spinAnimation) return;
+
+            // Een eventuele terugkeeranimatie stoppen
+            if (settleAnimation) {
+                settleAnimation.cancel();
+                settleAnimation = null;
+            }
+
+            // Alleen de draaiende gradient animeren
+            spinAnimation = gradient.animate(
+                [
+                    { transform: "rotate(0deg)" },
+                    { transform: "rotate(360deg)" }
+                ],
+                {
+                    duration: 3000,
+                    easing: "linear",
+                    iterations: Infinity
+                }
+            );
+        };
+
+        const settleAtStart = () => {
+            if (!spinAnimation) return;
+
+            const currentTime =
+                typeof spinAnimation.currentTime === "number"
+                    ? spinAnimation.currentTime
+                    : 0;
+
+            const angle = ((currentTime % 3000) / 3000) * 360;
+
+            spinAnimation.cancel();
+            spinAnimation = null;
+
+            if (settleAnimation) {
+                settleAnimation.cancel();
+                settleAnimation = null;
+            }
+
+            // Draai terug naar exact 0 graden
+            settleAnimation = gradient.animate(
+                [
+                    { transform: `rotate(${angle}deg)` },
+                    { transform: "rotate(0deg)" }
+                ],
+                {
+                    duration: Math.max((angle / 360) * 3000, 16),
+                    easing: "linear",
+                    fill: "forwards"
+                }
+            );
+
+            const currentSettle = settleAnimation;
+
+            currentSettle.finished
+                .then(() => {
+                    if (settleAnimation === currentSettle) {
+                        currentSettle.cancel();
+                        settleAnimation = null;
                     }
+                })
+                .catch(() => {
+                    // Normaal wanneer een animatie wordt geannuleerd
+                });
+        };
 
-                    spinAnimation = gradient.animate(
-                        [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
-                        { duration: 3000, easing: "linear", iterations: Infinity }
-                    );
-                };
+        // Muis
+        button.addEventListener("mouseenter", startSpinning);
+        button.addEventListener("mouseleave", settleAtStart);
 
-                const settleAtStart = () => {
-                    if (!gradient || !spinAnimation) return;
-                    
-                    const currentTime = typeof spinAnimation.currentTime === "number" ? spinAnimation.currentTime : 0;
-                    const angle = ((currentTime % 3000) / 3000) * 360; 
-                    
-                    spinAnimation.cancel();
-                    spinAnimation = null;
+        // Toetsenbord
+        button.addEventListener("focus", startSpinning);
+        button.addEventListener("blur", settleAtStart);
+    });
+});
+</script>
 
-                    if (gradient.animate) {
-                        const settle = gradient.animate(
-                            [{ transform: `rotate(${angle}deg)` }, { transform: "rotate(0deg)" }],
-                            { duration: Math.max((angle / 360) * 3000, 100), easing: "linear", fill: "forwards" }
-                        );
-                        
-                        settle.onfinish = () => {
-                            settle.cancel();
-                        };
-                    }
-                };
-
-                button.addEventListener('mouseenter', startSpinning);
-                button.addEventListener('mouseleave', settleAtStart);
-                button.addEventListener('focus', startSpinning);
-                button.addEventListener('blur', settleAtStart);
-            });
-        });
-    </script>
 </body>
 </html>
