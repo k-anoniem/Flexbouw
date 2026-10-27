@@ -10,7 +10,7 @@
         :root {
             --zwart: #121212;
             --wit: #ffffff;
-            --oranje: #ff7f00;       /* Hoofdkleur */
+            --oranje: #ff7f00;       
             --oranje-donker: #e67300;
             --grijs-licht: #f4f4f4;
             --tekst-kleur: #333333;
@@ -33,9 +33,9 @@
             min-height: 100vh; 
         }
 
-        /* 3. HEADER (Nu in Oranje!) */
+        /* 3. HEADER (Oranje) */
         header {
-            background-color: var(--oranje); /* Oranje balk */
+            background-color: var(--oranje); 
             color: var(--wit);
             padding: 1rem 5%;
             display: flex;
@@ -51,7 +51,7 @@
             display: flex;
             align-items: center;
             text-decoration: none;
-            background-color: var(--wit); /* Wit blokje voor je logo */
+            background-color: var(--wit); 
             padding: 5px 10px;
             border-radius: 5px;
         }
@@ -78,7 +78,6 @@
             position: relative;
         }
 
-        /* Icoontjes in de header (worden zwart bij hover) */
         nav a svg {
             width: 0; 
             height: 20px;
@@ -98,85 +97,73 @@
         }
 
         /* 4. MIDDEN */
-        main {
-            flex: 1; 
-        }
-
-        section {
-            padding: 80px 5%;
-            text-align: center;
-        }
-
+        main { flex: 1; }
+        section { padding: 80px 5%; text-align: center; }
         .bg-light { background-color: var(--wit); }
         .bg-grey { background-color: var(--grijs-licht); }
-
-        h1, h2 {
-            color: var(--zwart);
-            margin-bottom: 20px;
-        }
-
+        h1, h2 { color: var(--zwart); margin-bottom: 20px; }
         h1 { font-size: 3rem; }
         h2 { font-size: 2.5rem; }
+        p { max-width: 800px; margin: 0 auto 30px auto; font-size: 1.1rem; color: #555; }
 
-        p {
-            max-width: 800px;
-            margin: 0 auto 30px auto;
-            font-size: 1.1rem;
-            color: #555;
-        }
-
-        /* 5. DE NIEUWE SHINE KNOPPEN */
-        .btn-container {
-            margin-top: 20px;
-        }
+        /* 5. DE SHINE KNOPPEN (Aangepast) */
+        .btn-container { margin-top: 20px; }
 
         .subscribe-shine {
             position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 240px; /* Iets breder voor de Nederlandse tekst */
+            width: 240px; 
             height: 60px;
-            overflow: hidden;
-            border: 0;
             border-radius: 999px;
             background: transparent;
             padding: 0;
             cursor: pointer;
             text-decoration: none;
+            /* GEEN overflow: hidden meer, dat loste het glitch-effect op */
         }
 
         /* De glimmende achtergrond */
         .subscribe-shine-gradient {
             position: absolute;
-            width: 230px;
-            height: 250px;
-            flex: none;
-            /* Zwart-Wit-Zwart gradient voor een mooie glans */
-            background: linear-gradient(121deg, #121212 38%, #ffffff 50%, #121212 61%);
-            /* Standaard geen animatie, wordt via JS gestart */
+            inset: -2px; /* Iets groter dan de knop zodat hij als rand fungeert */
+            border-radius: 999px;
+            /* Zwart-Wit-Zwart gradient */
+            background: linear-gradient(121deg, #121212 30%, #ffffff 50%, #121212 70%);
+            /* Standaard onzichtbaar */
+            opacity: 0; 
+            transition: opacity 0.2s ease;
+            z-index: 1;
         }
 
         /* De binnenkant met de tekst */
         .subscribe-shine-inner {
             position: absolute;
-            inset: 2px; /* Dikte van de glimmende rand */
+            inset: 0; /* Vult de hele knop */
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 999px;
-            background: var(--oranje); /* Oranje binnenkant */
+            background: var(--zwart); /* STANDAARD HELEMAAL ZWART */
             color: var(--wit);
             font-size: 15px;
             font-weight: 700;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, color 0.3s;
+            z-index: 2; /* Ligt bovenop de glimmende achtergrond */
         }
 
+        /* Hover effect op de tekst/binnenkant */
         .subscribe-shine:hover .subscribe-shine-inner {
-            background: var(--oranje-donker);
+            background: var(--oranje);
+            color: var(--wit);
         }
 
-        /* Toegankelijkheid (focus) */
+        /* Als je hovert, wordt de glimmende achtergrond zichtbaar */
+        .subscribe-shine:hover .subscribe-shine-gradient {
+            opacity: 1;
+        }
+
         .subscribe-shine:focus-visible {
             outline: 2px solid var(--zwart);
             outline-offset: 3px;
@@ -204,10 +191,7 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
-        .card h3 {
-            color: var(--zwart);
-            margin-bottom: 15px;
-        }
+        .card h3 { color: var(--zwart); margin-bottom: 15px; }
 
         /* 7. FOOTER */
         footer {
@@ -228,71 +212,33 @@
             margin-bottom: 20px;
         }
 
-        .footer-content .logo {
-            color: var(--wit);
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .footer-links a {
-            color: #aaaaaa;
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--oranje);
-        }
+        .footer-content .logo { color: var(--wit); font-weight: bold; font-size: 1.2rem; }
+        .footer-links a { color: #aaaaaa; text-decoration: none; margin: 0 10px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--oranje); }
     </style>
 </head>
 <body>
 
-    <!-- ================= BOVENKANT ================= -->
     <header>
         <a href="#" class="logo-link">
-            <!-- Zorg dat je logo.png in de images map staat -->
             <img src="images/logo.png" alt="Flexbouw Logo" class="logo-img">
         </a>
         <nav>
             <ul>
-                <li>
-                    <a href="#">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="#diensten">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
-                        Diensten
-                    </a>
-                </li>
-                <li>
-                    <a href="#over-ons">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                        Over Ons
-                    </a>
-                </li>
-                <li>
-                    <a href="#contact">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        Contact
-                    </a>
-                </li>
+                <li><a href="#"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home</a></li>
+                <li><a href="#diensten"><svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>Diensten</a></li>
+                <li><a href="#over-ons"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>Over Ons</a></li>
+                <li><a href="#contact"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- ================= MIDDEN ================= -->
     <main>
-        <!-- Sectie 1: Hero -->
         <section class="bg-light" id="home">
             <h1>Welkom bij Flexbouw</h1>
             <p>Wij bouwen aan een betere toekomst. Ontdek onze projecten en diensten voor duurzaam en flexibel bouwen.</p>
             
             <div class="btn-container">
-                <!-- De Shine Knop -->
                 <a href="#diensten" class="subscribe-shine">
                     <span class="subscribe-shine-gradient"></span>
                     <span class="subscribe-shine-inner">Bekijk onze diensten</span>
@@ -300,7 +246,6 @@
             </div>
         </section>
 
-        <!-- Sectie 2: Diensten -->
         <section class="bg-grey" id="diensten">
             <h2>Onze Diensten</h2>
             <p>Wij bieden een breed scala aan bouwoplossingen, afgestemd op jouw wensen.</p>
@@ -321,19 +266,16 @@
             </div>
         </section>
 
-        <!-- Sectie 3: Over Ons -->
         <section class="bg-light" id="over-ons">
             <h2>Over Flexbouw</h2>
             <p>Al meer dan 10 jaar zijn wij dé specialist in flexibel en duurzaam bouwen. Ons team van experts staat klaar om jouw visie werkelijkheid te maken.</p>
         </section>
 
-        <!-- Sectie 4: Contact -->
         <section class="bg-grey" id="contact">
             <h2>Neem Contact Op</h2>
             <p>Heb je een vraag of wil je een offerte aanvragen? We horen graag van je!</p>
             
             <div class="btn-container">
-                <!-- Nog een Shine Knop -->
                 <a href="mailto:info@flexbouw.nl" class="subscribe-shine">
                     <span class="subscribe-shine-gradient"></span>
                     <span class="subscribe-shine-inner">Stuur een e-mail</span>
@@ -342,7 +284,6 @@
         </section>
     </main>
 
-    <!-- ================= EIND ================= -->
     <footer>
         <div class="footer-content">
             <div class="logo">Flexbouw</div>
@@ -354,57 +295,48 @@
         <p>&copy; 2024 Flexbouw. Alle rechten voorbehouden.</p>
     </footer>
 
-    <!-- ================= JAVASCRIPT VOOR DE SHINE ANIMATIE ================= -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Zoek alle shine-knoppen op de pagina
             const shineButtons = document.querySelectorAll('.subscribe-shine');
 
             shineButtons.forEach(button => {
                 const gradient = button.querySelector('.subscribe-shine-gradient');
                 let spinAnimation = null;
 
-                // Functie om te beginnen met draaien (bij hover)
                 const startSpinning = () => {
                     if (!gradient || spinAnimation) return;
                     
-                    // Stop een eventuele oude "settle" animatie
                     if (gradient.getAnimations) {
                         gradient.getAnimations().forEach(anim => anim.cancel());
                     }
 
-                    // Start de oneindige rotatie
                     spinAnimation = gradient.animate(
                         [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
                         { duration: 3000, easing: "linear", iterations: Infinity }
                     );
                 };
 
-                // Functie om te stoppen en rustig terug te draaien (bij muis weghalen)
                 const settleAtStart = () => {
                     if (!gradient || !spinAnimation) return;
                     
                     const currentTime = typeof spinAnimation.currentTime === "number" ? spinAnimation.currentTime : 0;
-                    const angle = ((currentTime % 3000) / 3000) * 360; // Bereken huidige hoek
+                    const angle = ((currentTime % 3000) / 3000) * 360; 
                     
                     spinAnimation.cancel();
                     spinAnimation = null;
 
-                    // Animeer soepel terug naar 0 graden
                     if (gradient.animate) {
                         const settle = gradient.animate(
                             [{ transform: `rotate(${angle}deg)` }, { transform: "rotate(0deg)" }],
                             { duration: Math.max((angle / 360) * 3000, 100), easing: "linear", fill: "forwards" }
                         );
                         
-                        // Ruim de animatie op als hij klaar is
                         settle.onfinish = () => {
                             settle.cancel();
                         };
                     }
                 };
 
-                // Koppel de muis- en focus-events
                 button.addEventListener('mouseenter', startSpinning);
                 button.addEventListener('mouseleave', settleAtStart);
                 button.addEventListener('focus', startSpinning);
