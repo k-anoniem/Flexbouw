@@ -106,83 +106,89 @@
         h2 { font-size: 2.5rem; }
         p { max-width: 800px; margin: 0 auto 30px auto; font-size: 1.1rem; color: #555; }
 
-        
-/* ================= SHINE KNOP ================= */
+        /* ================= SHINE KNOP ================= */
+        .btn-container {
+            margin-top: 20px;
+        }
 
-.btn-container {
-    margin-top: 20px;
-}
+        /* Buitenste knop met zwarte rand */
+        .subscribe-shine {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 240px;
+            height: 60px;
+            padding: 0;
+            border: 0;
+            border-radius: 999px;
+            background: var(--zwart);
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            isolation: isolate;
+        }
 
-/* Buitenste knop met zwarte rand */
-.subscribe-shine {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 240px;
-    height: 60px;
-    padding: 0;
-    border: 0;
-    border-radius: 999px;
-    background: var(--zwart);
-    overflow: hidden;
-    cursor: pointer;
-    text-decoration: none;
-    isolation: isolate;
-}
+        /* Witte gloed: standaard volledig onzichtbaar */
+        .subscribe-shine-gradient {
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            flex: none;
+            background: linear-gradient(
+                121deg,
+                #121212 38%,
+                #ffffff 50%,
+                #121212 61%
+            );
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-/* Witte gloed: standaard volledig onzichtbaar */
-.subscribe-shine-gradient {
-    position: absolute;
-    width: 230px;
-    height: 230px;
-    flex: none;
-    background: linear-gradient(
-        121deg,
-        #121212 38%,
-        #ffffff 50%,
-        #121212 61%
-    );
-    opacity: 0;
-    pointer-events: none;
-    z-index: 0;
-}
+        /* Oranje binnenkant */
+        .subscribe-shine-inner {
+            position: absolute;
+            inset: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: var(--oranje);
+            color: var(--wit); /* <--- HIER IS DE TEKST NU WIT */
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1;
+            transition: background-color 0.3s ease;
+            z-index: 1;
+        }
 
-/* Oranje binnenkant */
-.subscribe-shine-inner {
-    position: absolute;
-    inset: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    background: var(--oranje);
-    color: var(--zwart);
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1;
-    transition: background-color 0.3s ease;
-    z-index: 1;
-}
+        /* De gloed verschijnt uitsluitend bij hover of focus */
+        .subscribe-shine:hover .subscribe-shine-gradient,
+        .subscribe-shine:focus-visible .subscribe-shine-gradient {
+            opacity: 1;
+        }
 
-/* De gloed verschijnt uitsluitend bij hover of focus */
-.subscribe-shine:hover .subscribe-shine-gradient,
-.subscribe-shine:focus-visible .subscribe-shine-gradient {
-    opacity: 1;
-}
+        /* Oranje blijft oranje bij hover */
+        .subscribe-shine:hover .subscribe-shine-inner,
+        .subscribe-shine:focus-visible .subscribe-shine-inner {
+            background: var(--oranje);
+        }
 
-/* Oranje blijft oranje bij hover */
-.subscribe-shine:hover .subscribe-shine-inner,
-.subscribe-shine:focus-visible .subscribe-shine-inner {
-    background: var(--oranje);
-}
+        /* Toegankelijke toetsenbordfocus */
+        .subscribe-shine:focus-visible {
+            outline: 2px solid var(--zwart);
+            outline-offset: 4px;
+        }
 
-/* Toegankelijke toetsenbordfocus */
-.subscribe-shine:focus-visible {
-    outline: 2px solid var(--zwart);
-    outline-offset: 4px;
-}
-
+        /* ================= KAARTJES (DIENSTEN) ================= */
+        /* Dit stukje was per ongeluk weggevallen, hierdoor stonden de kaartjes niet meer netjes */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
 
         .card {
             background: var(--wit);
@@ -200,7 +206,7 @@
 
         .card h3 { color: var(--zwart); margin-bottom: 15px; }
 
-        /* 7. FOOTER */
+        /* ================= FOOTER ================= */
         footer {
             background-color: var(--zwart);
             color: #aaaaaa;
@@ -302,97 +308,90 @@
         <p>&copy; 2024 Flexbouw. Alle rechten voorbehouden.</p>
     </footer>
 
-    
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const shineButtons = document.querySelectorAll(".subscribe-shine");
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const shineButtons = document.querySelectorAll(".subscribe-shine");
 
-    shineButtons.forEach((button) => {
-        const gradient = button.querySelector(".subscribe-shine-gradient");
+            shineButtons.forEach((button) => {
+                const gradient = button.querySelector(".subscribe-shine-gradient");
 
-        if (!gradient) return;
+                if (!gradient) return;
 
-        let spinAnimation = null;
-        let settleAnimation = null;
+                let spinAnimation = null;
+                let settleAnimation = null;
 
-        const startSpinning = () => {
-            if (spinAnimation) return;
+                const startSpinning = () => {
+                    if (spinAnimation) return;
 
-            // Een eventuele terugkeeranimatie stoppen
-            if (settleAnimation) {
-                settleAnimation.cancel();
-                settleAnimation = null;
-            }
-
-            // Alleen de draaiende gradient animeren
-            spinAnimation = gradient.animate(
-                [
-                    { transform: "rotate(0deg)" },
-                    { transform: "rotate(360deg)" }
-                ],
-                {
-                    duration: 3000,
-                    easing: "linear",
-                    iterations: Infinity
-                }
-            );
-        };
-
-        const settleAtStart = () => {
-            if (!spinAnimation) return;
-
-            const currentTime =
-                typeof spinAnimation.currentTime === "number"
-                    ? spinAnimation.currentTime
-                    : 0;
-
-            const angle = ((currentTime % 3000) / 3000) * 360;
-
-            spinAnimation.cancel();
-            spinAnimation = null;
-
-            if (settleAnimation) {
-                settleAnimation.cancel();
-                settleAnimation = null;
-            }
-
-            // Draai terug naar exact 0 graden
-            settleAnimation = gradient.animate(
-                [
-                    { transform: `rotate(${angle}deg)` },
-                    { transform: "rotate(0deg)" }
-                ],
-                {
-                    duration: Math.max((angle / 360) * 3000, 16),
-                    easing: "linear",
-                    fill: "forwards"
-                }
-            );
-
-            const currentSettle = settleAnimation;
-
-            currentSettle.finished
-                .then(() => {
-                    if (settleAnimation === currentSettle) {
-                        currentSettle.cancel();
+                    if (settleAnimation) {
+                        settleAnimation.cancel();
                         settleAnimation = null;
                     }
-                })
-                .catch(() => {
-                    // Normaal wanneer een animatie wordt geannuleerd
-                });
-        };
 
-        // Muis
-        button.addEventListener("mouseenter", startSpinning);
-        button.addEventListener("mouseleave", settleAtStart);
+                    spinAnimation = gradient.animate(
+                        [
+                            { transform: "rotate(0deg)" },
+                            { transform: "rotate(360deg)" }
+                        ],
+                        {
+                            duration: 3000,
+                            easing: "linear",
+                            iterations: Infinity
+                        }
+                    );
+                };
 
-        // Toetsenbord
-        button.addEventListener("focus", startSpinning);
-        button.addEventListener("blur", settleAtStart);
-    });
-});
-</script>
+                const settleAtStart = () => {
+                    if (!spinAnimation) return;
+
+                    const currentTime =
+                        typeof spinAnimation.currentTime === "number"
+                            ? spinAnimation.currentTime
+                            : 0;
+
+                    const angle = ((currentTime % 3000) / 3000) * 360;
+
+                    spinAnimation.cancel();
+                    spinAnimation = null;
+
+                    if (settleAnimation) {
+                        settleAnimation.cancel();
+                        settleAnimation = null;
+                    }
+
+                    settleAnimation = gradient.animate(
+                        [
+                            { transform: `rotate(${angle}deg)` },
+                            { transform: "rotate(0deg)" }
+                        ],
+                        {
+                            duration: Math.max((angle / 360) * 3000, 16),
+                            easing: "linear",
+                            fill: "forwards"
+                        }
+                    );
+
+                    const currentSettle = settleAnimation;
+
+                    currentSettle.finished
+                        .then(() => {
+                            if (settleAnimation === currentSettle) {
+                                currentSettle.cancel();
+                                settleAnimation = null;
+                            }
+                        })
+                        .catch(() => {
+                            // Normaal wanneer een animatie wordt geannuleerd
+                        });
+                };
+
+                button.addEventListener("mouseenter", startSpinning);
+                button.addEventListener("mouseleave", settleAtStart);
+                button.addEventListener("focus", startSpinning);
+                button.addEventListener("blur", settleAtStart);
+            });
+        });
+    </script>
 
 </body>
 </html>
